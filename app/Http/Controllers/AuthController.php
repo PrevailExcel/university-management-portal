@@ -27,7 +27,7 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt(['reg_no' => $request->reg_no, 'password' => $request->password])) {
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/');
         }
         return redirect()->back()->with('alert', 'Reg number and Password Not Matched');
     }

@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\DeptCourse;
 use App\Models\Faculty;
 use App\Models\Fee;
+use App\Models\Gss;
 use App\Models\Lecturer;
 use App\Models\Material;
 use App\Models\Ref;
@@ -68,6 +69,75 @@ class DatabaseSeeder extends Seeder
             $course->save();
         }
 
+        $gss = new Gss();
+
+        $gss->code = 'GS 101';
+        $gss->credit = 2;
+        $gss->semester = 1;
+        $gss->level = 1;
+        $gss->save();
+
+        $gss = new Gss();
+        $gss->code = 'GS 102';
+        $gss->credit = 2;
+        $gss->semester = 2;
+        $gss->level = 1;
+        $gss->save();
+
+        $gss = new Gss();
+        $gss->code = 'GS 103';
+        $gss->credit = 1;
+        $gss->semester = 1;
+        $gss->level = 1;
+        $gss->save();
+
+        $gss = new Gss();
+        $gss->code = 'GS 104';
+        $gss->credit = 1;
+        $gss->semester = 2;
+        $gss->level = 1;
+        $gss->save();
+
+        $gss = new Gss();
+        $gss->code = 'GS 105';
+        $gss->credit = 1;
+        $gss->semester = 1;
+        $gss->level = 1;
+        $gss->save();
+
+        $gss = new Gss();
+        $gss->code = 'GS 106';
+        $gss->credit = 1;
+        $gss->semester = 2;
+        $gss->level = 1;
+        $gss->save();
+
+        $gss = new Gss();
+        $gss->code = 'GS 107';
+        $gss->credit = 1;
+        $gss->semester = 1;
+        $gss->level = 1;
+        $gss->save();
+        $gss = new Gss();
+        $gss->code = 'GS 109';
+        $gss->credit = 1;
+        $gss->semester = 1;
+        $gss->level = 1;
+        $gss->save();
+        $gss = new Gss();
+        $gss->code = 'GS 110';
+        $gss->credit = 1;
+        $gss->semester = 2;
+        $gss->level = 1;
+        $gss->save();
+        
+        $gss = new Gss();
+        $gss->code = 'GS 301';
+        $gss->credit = 1;
+        $gss->semester = 1;
+        $gss->level = 3;
+        $gss->save();
+        
         for ($i = 1; $i < 5; $i++) {
             $faculty = new Faculty();
             $faculty->name = 'Faculty ' . $i;

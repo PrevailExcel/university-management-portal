@@ -36,7 +36,7 @@
                                             <span class="text-dark"> Grade </span>
                                         </b>
                                     </p>
-                                    @foreach ($courses as $course)
+                                    @forelse ($courses as $course)
                                         @if ($course->pivot->level == $i)
                                             <p class="d-flex justify-content-between border-bottom border-primary">
                                                 <span>{{ $course->code }}</span>
@@ -48,7 +48,13 @@
                                                 </span>
                                             </p>
                                         @endif
-                                    @endforeach
+                                        @empty
+                                        
+                            <div class="alert alert-success  fw-bold">
+                                No Results available
+                                <span class="float-end"><i class="fa fa-stop"> </i> </span>
+                            </div>
+                                    @endforelse
                                     @php
                                         $getCGPA = new \App\Http\Controllers\DashboardController();
                                     @endphp

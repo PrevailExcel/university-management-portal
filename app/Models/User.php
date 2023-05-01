@@ -58,8 +58,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Course::class, 'course_user')->withPivot(['score', 'level']);
     }
 
-    public function carryOvers()
+    public function gss()
     {
-        return $this->belongsToMany(Course::class, 'course_user')->withPivot(['score', 'level'])->wherePivot('score', '<=', 39)->wherePivot('level', '!=', $this->level);
+        return $this->belongsToMany(Gss::class, 'gss_user')->withPivot(['score', 'level']);
     }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fee;
+use App\Models\Gss;
 use App\Models\Material;
 use App\Models\Ref;
 use App\Models\User;
@@ -196,5 +197,11 @@ class DashboardController extends Controller
         $ref->save();
 
         return redirect()->back()->with('success', 'Ref have been generated successfully.');
+    }
+
+    public function sgs()
+    {
+        $gss = Gss::all();
+        return view('sgs', compact('gss'));
     }
 }
