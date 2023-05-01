@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Department;
 use App\Models\DeptCourse;
@@ -15,6 +16,7 @@ use App\Models\Material;
 use App\Models\Ref;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Nette\Utils\Random;
 
 class DatabaseSeeder extends Seeder
@@ -26,6 +28,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        
+        $admin = new Admin();
+        $admin->name = 'Super Admin';
+        $admin->email = 'admin@example.com';
+        $admin->password = Hash::make('password');
+        $admin->save();
+
         $CoursePool = ['MAT', 'EDU', 'CSC', 'PHY', 'BUS', 'STAT', 'BIO', 'FRN', 'SOS', 'GRM', 'GEO', 'FEG', 'FAG', 'BUM', 'COM', 'SIM', 'POS'];
 
         for ($i = 0; $i < 10; $i++) {
@@ -217,6 +226,7 @@ class DatabaseSeeder extends Seeder
 
             $courses = $user->department->courses;
             $myC = [];
+            $myGss = [];
 
             //Get all available courses for user level and department
             foreach ($courses as $course) {
@@ -225,6 +235,14 @@ class DatabaseSeeder extends Seeder
                 }
             }
             $user->courses()->attach($myC);
+
+                foreach (Gss::all() as $course) {
+                    if ($user->level > $course->level) {
+                        array_push($myGss, ["gss_id" => $course->id, "score" => rand(35, 99), "level" => $course->level]);
+                    }
+                }
+                $user->gss()->attach($myGss);
+            
 
             for ($i = 1; $i < $user->level; $i++) {
                 $fee = Fee::where('faculty_id', $user->department->faculty_id)->where('level', $user->level)->first();
@@ -239,6 +257,11 @@ class DatabaseSeeder extends Seeder
                 $ref->save();
             }
         }
+        
+        Lecturer::factory()->create([
+            'email' => 'lecturer@example.com',
+        ]);
+
 
         \App\Models\Lecturer::factory(10)->create();
 

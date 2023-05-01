@@ -51,42 +51,40 @@
                 </div>
                 <div class="row gx-5">
                     @for ($i = 1; $i < auth()->user()->level; $i++)
-                        <div class="col-lg-3 me-3">
-                            <span class="fw-bold pb-2 mb-5">{{ $i }}00 Level Result</span>
-                            <div class="mt-4">
-                                <p>
-                                    <b class="d-flex justify-content-between border-bottom border-primary mb-2">
-                                        <span>Course</span>
-                                        <span class="text-dark"> Score </span>
-                                        <span class="text-dark"> Grade </span>
-                                    </b>
-                                </p>
-                                @forelse ($courses as $course)
-                                    @if ($course->pivot->level == $i)
-                                        <p class="d-flex justify-content-between border-bottom border-primary">
-                                            <span>{{ $course->code }}</span>
-                                            <span class="text-dark"> {{ $course->pivot->score }} </span>
-                                            @php
-                                                $getGrade = new \App\Http\Controllers\DashboardController();
-                                            @endphp
-                                            <span class="text-dark"> {{ $getGrade->grade($course->pivot->score) }}
-                                            </span>
-                                        </p>
-                                    @endif
-                                    
+                        @if (collect($courses)->where('level', $i)->count() > 0)
+                            <div class="col-lg-3 me-3">
+                                <span class="fw-bold pb-2 mb-5">{{ $i }}00 Level Result</span>
+                                <div class="mt-4">
+                                    <p>
+                                        <b class="d-flex justify-content-between border-bottom border-primary mb-2">
+                                            <span>Course</span>
+                                            <span class="text-dark"> Score </span>
+                                            <span class="text-dark"> Grade </span>
+                                        </b>
+                                    </p>
+                                    @forelse ($courses as $course)
+                                        @if ($course->pivot->level == $i)
+                                            <p class="d-flex justify-content-between border-bottom border-primary">
+                                                <span>{{ $course->code }}</span>
+                                                <span class="text-dark"> {{ $course->pivot->score }} </span>
+                                                @php
+                                                    $getGrade = new \App\Http\Controllers\DashboardController();
+                                                @endphp
+                                                <span class="text-dark"> {{ $getGrade->grade($course->pivot->score) }}
+                                                </span>
+                                            </p>
+                                        @endif
+
                                     @empty
-                                        
-                                    <div class="alert alert-success  fw-bold">
-                                        No Results available
-                                        <span class="float-end"><i class="fa fa-stop"> </i> </span>
-                                    </div>
-                                @endforelse
-                                @php
-                                    $getCGPA = new \App\Http\Controllers\DashboardController();
-                                @endphp
-                                <p class="mt-4">GPA: <b>{{ $getCGPA->cgpa($i) }}</b></p>
+
+                                        <div class="alert alert-success  fw-bold">
+                                            No Results available
+                                            <span class="float-end"><i class="fa fa-stop"> </i> </span>
+                                        </div>
+                                    @endforelse
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     @endfor
                 </div>
             </div>
@@ -94,7 +92,7 @@
             <div class="col-lg-3 ps-lg-5">
                 @auth
                     <button disabled class="btn btn-primary"><i class="fa fa-graduation-cap"> </i>
-                        SGS Courses
+                        SGS Results
                     </button>
                     <a href="{{ route('sgs') }}"><button class="float-end btn btn-dark"><i class="fa fa-caret-left"> </i>
                             Back</button></a>

@@ -75,11 +75,17 @@
                                 Title
                                 <span class="text-dark"> Semester </span>
                             </li>
-                            @foreach ($gss as $course)
+                            @foreach (collect($gss)->sortBy('semester') as $course)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span>{{ $course->code }} <small><i
                                                 class="text-muted">{{ $course['type'] ?? null }}</i></small></span>
-                                    <span class="text-dark"> {{ $course->semester }}
+                                    <span class="text-dark"> 
+                                         
+                                    @if ($course->semester == 1)
+                                    &nbsp; &nbsp; &nbsp; 1st
+                                 @else
+                                     2nd
+                                 @endif 
                                         <i class="ps-2 fa fa-plus text-success"></i>
                                     </span>
                                 </li>

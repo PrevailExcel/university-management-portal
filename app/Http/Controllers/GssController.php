@@ -20,22 +20,26 @@ class GssController extends Controller
         $selectedCourses = [];
         $regCourses = [];
 
-        if ($user->level == 1) {
-            $gss = Gss::where('level', 1)->get();
-        } else if ($user->level == 3) {
-            $gss = Gss::where('level', 3)->get();
-        }
-        else {
-            $myGss = $user->gss;
 
-            foreach ($myGss as $gs) {
-                if($gs->pivot->score < 39 && $gs->pivot->score != 0){                
+
+        $myGss = $user->gss;
+
+        foreach ($myGss as $gs) {
+            if ($gs->pivot->score < 39 && $gs->pivot->score != 0) {
                 $gs['type'] = 'co';
                 // Add to selected courses
                 array_push($selectedCourses, $gs);
-                }
             }
-            $gss = $selectedCourses;
+        }
+        if ($user->level == 3) {
+            $gs = Gss::where('level', 3)->first();
+            array_push($selectedCourses, $gs);
+        }
+
+        $gss = $selectedCourses;
+
+        if ($user->level == 1) {
+            $gss = Gss::where('level', 1)->get();
         }
 
         $regCourses = $user->gss->where('level', $user->level);
@@ -43,12 +47,14 @@ class GssController extends Controller
         return view('sgscourses', compact('gss', 'regCourses'));
     }
 
-    public function sgsFees(){
+    public function sgsFees()
+    {
         return view('sgsfees');
     }
 
-    public function sgsResults(){
-        
+    public function sgsResults()
+    {
+
         $user = auth()->user();
         $courses = $user->gss;
 
@@ -62,7 +68,5 @@ class GssController extends Controller
         }
         $courses = $selectedCourses;
         return view('sgsresults', compact('courses'));
-    
     }
-
 }

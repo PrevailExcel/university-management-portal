@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('surname');
             $table->string('other_names');
+            $table->string('phone');
+            $table->string('gender');
+            $table->string('dob');
             $table->string('reg_no')->unique();
             $table->string('faculty_id');
             $table->string('department_id');

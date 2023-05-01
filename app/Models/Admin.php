@@ -8,18 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Lecturer extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    public function courses()
-    {
-        return $this->belongsToMany(DeptCourse::class, 'course_lecturer');
-    }
-    
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
 
 }

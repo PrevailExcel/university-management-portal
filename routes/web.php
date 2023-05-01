@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
@@ -23,6 +24,13 @@ Route::get('/', function () {
 Route::post('login', [AuthController::class, 'authenticate'])->name('login');
 
 
+Route::get('admin/login', [AuthController::class, 'showAdmin'])->name('admin.login')->middleware(['guest']);
+Route::post('admin/login', [AuthController::class, 'authenticateAdmin']);
+
+Route::prefix('admin')->middleware(['admins'])->group(function () {
+    Route::get('/',  [AdminController::class, 'show'])->name('admin.dashboard');
+    Route::get('/users',  [AdminController::class, 'users'])->name('admin.users');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/courses',  [DashboardController::class, 'courses'])->name('courses');    

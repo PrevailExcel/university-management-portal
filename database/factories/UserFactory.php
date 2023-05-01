@@ -19,11 +19,18 @@ class UserFactory extends Factory
     {
         $level = rand(1, 4);
         $year = today()->subYears($level);
-
+        $gender = rand(1, 2);
+        if ($gender == 1)
+            $gender = 'Male';
+        else
+            $gender = 'Female';
 
         return [
             'surname' => fake()->firstName(),
             'other_names' => fake()->lastName(),
+            'phone' => 0 . rand(7, 9) . rand(0, 1) . rand(11111111, 99999999),
+            'gender' => $gender,
+            'dob' => fake()->date(),
             'reg_no' => '20' . rand(16, 23) . rand(109, 782) . rand(100, 999),
             'faculty_id' => rand(1, 4),
             'department_id' => rand(1, 4),
