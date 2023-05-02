@@ -1,3 +1,7 @@
+:root {
+    --priColor: #1A5F7A;
+    --secColor: #159895;
+}
 .btn-grad {
     margin: 30px 20px;
     padding: 60px;

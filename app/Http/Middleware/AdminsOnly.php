@@ -20,7 +20,7 @@ class AdminsOnly
         if (Auth::guard('admin')->user()) {
             return $next($request);
         } else {
-            return redirect()->route('dashboard');
+            return redirect()->route('/');
         }
 
         return $next($request);

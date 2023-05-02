@@ -26,4 +26,16 @@ class AdminController extends Controller
         $users = User::all();
         return view('admin.users', compact('users'));
     }
+    
+    public function lecturers()
+    {
+        $lecturers = Lecturer::all();
+        return view('admin.lecturers', compact('lecturers'));
+    }
+    
+    public function faculties()
+    {
+        $faculties = Faculty::all();
+        return view('admin.faculties', compact('faculties'));
+    }
 }

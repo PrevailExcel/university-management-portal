@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UsersOnly
+class LecturersOnly
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,12 @@ class UsersOnly
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->type == 1) {
+        if (Auth::guard('lecturer')->user()) {
             return $next($request);
         } else {
-            return redirect()->route('/');
+            return redirect()->route('/admin');
         }
+
         return $next($request);
     }
 }

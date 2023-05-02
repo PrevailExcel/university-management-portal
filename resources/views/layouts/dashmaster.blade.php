@@ -24,7 +24,7 @@
 <body>
     <header class="navbar navbar-dark sticky-top bg-dark bg-theme-2 flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3"
-            href="#">{{ auth()->user()->surname ?? auth('admin')->user()->name }}</a>
+            href="#">{{ auth()->user()->surname ?? auth('admin')->user()->name ?? auth('lecturer')->user()->name}}</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -33,7 +33,7 @@
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="{{ 'logout' }}">Sign out</a>
+                <a class="nav-link px-3" href="{{ route('logout') }}">Sign out</a>
             </div>
         </div>
     </header>
@@ -43,14 +43,15 @@
             <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
+                        
+                        @if (auth('admin')->user())
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" aria-current="page"
+                            <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" aria-current="page"
                                 href="{{ route('admin.dashboard') }}">
                                 <span class="fa fa-tachometer"></span>
                                 Dashboard
                             </a>
                         </li>
-                        @if (auth('admin')->user())
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}"
                                     href="{{ route('admin.users') }}">
@@ -59,15 +60,15 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('dashboard/users*') ? 'active' : '' }}"
-                                    href="{{ 'users' }}">
+                                <a class="nav-link {{ request()->is('admin/lecturers*') ? 'active' : '' }}"
+                                    href="{{ route('admin.lecturers') }}">
                                     <span class="fa fa-users"></span>
                                     Lecturers
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('dashboard/hospitals*') ? 'active' : '' }}"
-                                    href="{{ 'hospitals' }}">
+                                <a class="nav-link {{ request()->is('admin/faculties*') ? 'active' : '' }}"
+                                    href="{{ route('admin.faculties') }}">
                                     <span class="fa fa-hospital-o"></span>
                                     Faculties
                                 </a>
@@ -95,6 +96,22 @@
                             </li>
                         @endif
 
+                        @if (auth('lecturer')->user())
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('admin') ? 'active' : '' }}" aria-current="page"
+                                href="{{ route('admin.dashboard') }}">
+                                <span class="fa fa-tachometer"></span>
+                                Dashboard
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}"
+                                    href="{{ route('admin.users') }}">
+                                    <span class="fa fa-users"></span>
+                                    Materials
+                                </a>
+                            </li>
+                            @endif
                         <h6
                             class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             <span>Others</span>

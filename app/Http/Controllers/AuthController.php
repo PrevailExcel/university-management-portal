@@ -31,13 +31,16 @@ class AuthController extends Controller
         }
         return redirect()->back()->with('alert', 'Reg number and Password Not Matched');
     }
-
     
     public function showAdmin()
     {
         return view('admin.login');
     }
-
+    
+    public function showLecturer()
+    {
+        return view('lecturer.login');
+    }
     
     public function authenticateAdmin(Request $request)
     {
@@ -48,6 +51,19 @@ class AuthController extends Controller
 
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
             return redirect()->intended('/admin');
+        }
+        return redirect()->back()->with('alert', 'Email and Password Not Matched');
+    }
+
+    public function authenticateLecturer(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required',
+            'password' => 'required'
+        ]);
+
+        if (Auth::guard('lecturer')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            return redirect()->intended('/lecturer');
         }
         return redirect()->back()->with('alert', 'Email and Password Not Matched');
     }
@@ -89,6 +105,6 @@ class AuthController extends Controller
     {
         Auth::logout();
         session()->regenerate();
-        return redirect()->route('login');
+        return redirect()->route('/');
     }
 }

@@ -22,4 +22,9 @@ class Lecturer extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
+
 }
